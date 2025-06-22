@@ -13,7 +13,7 @@ This program would take your **daily import of spendings and earnings** and give
 | 📊 Summary View                  | Displays a summary of all transactions with total income and expenses      | ✅      |
 | 📈 Visualizations (Pie Chart)    | Shows a **category-wise spending chart**                                   | 🚧 Work in progress    |
 | 🧠 Savings Suggestions (AI)      | Gives **suggestions for improvement in your savings**                      | 🚧 Work in progress |
-| 🌐 Web Interface (Flask)         | Built with **Python and HTML** using **Flask as the frontend**             | ✅    |
+| 🌐 Web Interface (Flask)         | Built with **Python and HTML** using **Flask as the frontend**             |  🚧 Work in progress  |
 
 ---
 
