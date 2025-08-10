@@ -1,3 +1,5 @@
 Flask
+Werkzeug
 pandas
-matplotlib
+scikit-learn
+numpy
