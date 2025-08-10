@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Add Entry</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300..700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles/style.css') }}">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+</head>
+<body>
+
+  <header>
+    <div style="align-items: left;">
+    <image height=50px width=50px style="border-radius: 10px;" src="{{ url_for('static', filename = 'Dynamis.png') }}"></image>
+  </div>
+    <h1>Logistikon</h1>
+    <nav>
+      <a href="{{ url_for('index') }}"> Dashboard</a>
+    </nav>
+  </header>
+
+  <main class="dashboard">
+    <div class="panel">
+      <h2 style="text-align: center;">Record New Transaction</h2>
+
+      <form method="post">
+        <label for="type">Type</label>
+        <select name="type" required>
+          <option value="income">Income</option>
+          <option value="expense">Expense</option>
+        </select>
+
+        <label for="amount">Amount</label>
+        <input type="number" name="amount" step="0.01" required>
+
+        <label for="category">Category</label>
+        <input type="text" name="category" placeholder="e.g., Groceries, Rent" required>
+
+        <label for="description">Description</label>
+        <textarea name="description" rows="3" placeholder="Optional note..."></textarea>
+
+        <label for="date">Date & Time</label>
+        <input type="text" id="date" name="date" placeholder="Select date and time">
+         <div style="height:20px"></div>
+        <button class="btn" type="submit">Add Entry</button>
+      </form>
+    </div>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+  <script>
+    flatpickr("#date", {
+      enableTime: true,
+      dateFormat: "Y-m-d H:i:S",
+      defaultDate: new Date()
+    });
+  </script>
+</body>
+</html>

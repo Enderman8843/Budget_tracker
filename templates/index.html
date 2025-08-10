@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Budget Tracker Dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300..700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles/style.css') }}">
+  
+
+</head>
+<body>
+<header>
+  <image height=50px width=50px style="border-radius: 10px;" src="{{ url_for('static', filename = 'Dynamis.png') }}"></image>
+  <h1>Logistikon</h1>
+  <nav style=" display: flex; align-items: left;">
+    
+      <select id="currency" onchange="window.location.href='/set_currency/' + this.value;">
+        <option value="INR" {% if session.currency == 'INR' %}selected{% endif %}>₹ INR</option>
+        <option value="USD" {% if session.currency == 'USD' %}selected{% endif %}>$ USD</option>
+        <option value="EUR" {% if session.currency == 'EUR' %}selected{% endif %}>€ EUR</option>
+        <option value="GBP" {% if session.currency == 'GBP' %}selected{% endif %}>£ GBP</option>
+        <option value="JPY" {% if session.currency == 'JPY' %}selected{% endif %}>¥ JPY</option>
+      </select>
+    
+    
+    <a href="{{ url_for('export_csv') }}"><span class="material-icons">download</span> Export CSV</a>
+    <a href="{{ url_for('logout') }}"><span class="material-icons">logout</span>Logout</a>
+
+  </nav>
+</header>
+
+<main class="dashboard">
+  <!-- Summary -->
+  <div class="panel">
+    <h2><span class="material-icons">insights</span> Summary</h2>
+    <div class="summary">
+      <div class="summary-item">
+        <h3>Total Income</h3>
+        <p>{{ currency }} {{ income }}</p>
+      </div>
+      <div class="summary-item">
+        <h3>Total Expenses</h3>
+        <p>{{ currency }} {{ expense }}</p>
+      </div>
+      <div class="summary-item">
+        <h3>Balance</h3>
+        <p>{{ currency }} {{ balance }}</p>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="panel">
+    <h2><span class="material-icons">psychology</span> AI Insights – {{ time_range_label }}</h2>
+    {% if ai_insights and ai_insights|length > 0 %}
+    <div class="insights-container">
+      {% for title, value in ai_insights.items() %}
+      <div class="insight-card">
+        <h3>{{ title }}</h3>
+        <p>{{ value }}</p>
+      </div>
+      {% endfor %}
+    </div>
+    {% else %}
+    <p>No insights available for this period.</p>
+    {% endif %}
+  </div>
+
+
+  <div class="panel filter-panel">
+    <h2><span class="material-icons">calendar_today</span> Filter by Date</h2>
+    <form class="date-filter" method="get" action="/">
+      <label>Start Date:</label>
+      <div style="margin-top: 10px;"></div>
+      <input type="text" id="start" placeholder="Start Date" value="{{ request.args.get('start', '') }}">
+      <div style="margin-top: 10px;"></div>
+      <label>End Date:</label>
+      <div style="margin-top: 10px;"></div>
+      <input type="text" id="end" name="end"placeholder="End Date"  value="{{ request.args.get('end', '') }}">
+      
+        <div style="margin-top: 20px;"></div>
+      <button type="submit" class="btn"><span class="material-icons">filter_alt</span> Apply</button>
+     
+        <button type="button" class="btn" onclick="setQuickRange('today')">Today</button>
+        <button type="button" class="btn" onclick="setQuickRange('week')">This Week</button>
+        <button type="button" class="btn" onclick="setQuickRange('month')">This Month</button>
+        <button type="button" class="btn" onclick="setQuickRange('all')">All Time</button>
+      </div>
+    </form>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+  <script>
+    flatpickr("#start", { enableTime: true, dateFormat: "Y-m-d H:i:S" });
+    flatpickr("#end", { enableTime: true, dateFormat: "Y-m-d H:i:S" });
+    function setQuickRange(range) {
+      const today = new Date();
+      let start, end = new Date(today);
+      if (range === 'today') start = new Date(today);
+      else if (range === 'week') { start = new Date(today); start.setDate(today.getDate() - today.getDay()); }
+      else if (range === 'month') start = new Date(today.getFullYear(), today.getMonth(), 1);
+      else { document.getElementById('start').value = ''; document.getElementById('end').value = ''; document.querySelector('.date-filter').submit(); return; }
+      document.getElementById('start').value = start.toISOString().slice(0, 10) + " 00:00:00";
+      document.getElementById('end').value = end.toISOString().slice(0, 10) + " 23:59:59";
+      document.querySelector('.date-filter').submit();
+    }
+  </script>
+
+  <!-- Transactions -->
+  <div class="panel lined">
+    <h2><span class="material-icons">receipt_long</span> Transactions</h2>
+    {% if transactions and transactions|length > 0 %}
+    <table class="lined">
+      <thead>
+        <tr>
+          <th>Type</th><th>Amount</th><th>Category</th><th>Description</th><th>Date</th><th>Delete</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for tx in transactions %}
+        <tr>
+          <td>{{ tx.type }}</td>
+          <td>{{ currency }} {{ tx.amount }}</td>
+          <td>{{ tx.category }}</td>
+          <td>{{ tx.description }}</td>
+          <td>{{ tx.date }}</td>
+          <td>
+            <form method="POST" action="{{ url_for('delete_transaction', tx_id=tx.id) }}">
+              <button type="submit" class="btn-delete" onclick="return confirm('Delete this transaction?'); ">
+                <span class="material-icons">delete</span>
+              </button>
+            </form>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% else %}
+    <p>No transactions found for this period.</p>
+    {% endif %}
+  </div>
+<a href="{{url_for('add_entry')}}" class="fab"><i class="my-fab"></i>Add Entry +</a>
+</main>
+</body>
+</html>

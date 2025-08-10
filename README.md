@@ -1,9 +1,12 @@
-# 💰 Budget Tracker
+# Logistikon
 
-**Budget Tracker** is a program that would be written in **Python and HTML** (**Flask as the frontend**).  
+**Logistikon** is a program that would be written in **Python and HTML** (**Flask as the frontend**).  
 This program would take your **daily import of spendings and earnings** and give you **suggestions for improvement in your savings**.
 
 ---
+
+# Demo 
+
 
 ## 📋 Features Table
 
@@ -11,19 +14,17 @@ This program would take your **daily import of spendings and earnings** and give
 |----------------------------------|-----------------------------------------------------------------------------|---------------------|
 | 📥 Income & Expense Input        | Takes your daily import of **spendings and earnings**                      | ✅       |
 | 📊 Summary View                  | Displays a summary of all transactions with total income and expenses      | ✅      |
-| 📈 Visualizations (Pie Chart)    | Shows a **category-wise spending chart**                                   | 🚧 Work in progress    |
-| 🧠 Savings Suggestions (AI)      | Gives **suggestions for improvement in your savings**                      | 🚧 Work in progress |
-| 🌐 Web Interface (Flask)         | Built with **Python and HTML** using **Flask as the frontend**             |  🚧 Work in progress  |
+| 📈 Visualizations (Pie Chart)    | Shows a **category-wise spending chart**                                   | Not Done |
+| 🧠 Savings Suggestions (AI)      | Gives **suggestions for improvement in your savings**                      | ✅  |
+| 
 
 ---
 
-## 🚀 Tech Stack
+## Tech Used
 
 - **Backend**: Python
 - **Frontend**: HTML / CSS
 - **Framework**: Flask
-- **Data Processing**: Pandas
-- **Visualization**: Matplotlib
 
 ---
 

@@ -1,0 +1,4 @@
+type,amount,category,description,date
+expense,2500,Rent,Monthly Rent,2025-07-01
+expense,300,Subscriptions,Netflix Monthly,2025-07-01
+income,50000,Salary,Monthly Salary,2025-07-01
