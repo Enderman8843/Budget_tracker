@@ -6,7 +6,7 @@ This program would take your **daily import of spendings and earnings** and give
 ---
 
 # Demo 
-
+https://logistikon.onrender.com
 
 ## 📋 Features Table
 
