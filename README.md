@@ -7,6 +7,8 @@ This program would take your **daily import of spendings and earnings** and give
 
 # Demo 
 https://logistikon.onrender.com
+Please wait for 50 seconds to 1 min as it is deployed on free version of render
+# Demo Video
 
 ## 📋 Features Table
 
