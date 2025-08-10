@@ -3,4 +3,3 @@ Werkzeug
 pandas
 scikit-learn
 numpy
-vercel-python-wsgi
